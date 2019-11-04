@@ -149,7 +149,7 @@ We will add a new action for this optional argument that will simply send `Dev m
 
     try:
         for arg in self.args.keys():
-            if arg == 'system':
+            if arg == 'command':
                 if self.args[arg] == 'ls':
                     retdata = {'key': 'dict', 'value': []}
                     for e in os.listdir():
