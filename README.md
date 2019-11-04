@@ -163,7 +163,7 @@ We will add a new action for this optional argument that will simply send `Dev m
 
         self.init_client_communication(retdata)
 
-Now restart the server and client: `ctrl_c` on both terminals and start the again.
+Now restart the server and client: `ctrl_c` on both terminals and start them again.
 
     ------------ RemoteCLI ------------
 
