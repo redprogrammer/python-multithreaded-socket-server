@@ -48,7 +48,7 @@ class srvprime():
             if active_threads['connections'][c]['thread'].is_alive():
                 logging.info("Sending stop signal at - \t%s:%s" % (active_threads['connections'][c]['ip'], c))
                 ThreadLock.acquire()
-                active_threads['connections'][c]['state'] = False
+                active_threads['connections'][c]['state'] = 2
                 ThreadLock.release()
 
     def report(self):
