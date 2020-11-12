@@ -6,6 +6,7 @@ import socket, traceback
 import sys, select
 import yaml, json
 import logging
+import threading
 
 if 'debug' in sys.argv[:]:
     log_level = logging.DEBUG
@@ -24,11 +25,11 @@ active_threads = {
 }
 
 class srvprime():
-    def __init__(self, host="0.0.0.0", port=55557):
-        self.host = host
+    def __init__(self, port=55557):
+        self.host = "0.0.0.0"
         self.port = port
         self.ServiceState(True)
-    
+
     def ServiceState(self, state):
         self.running_state = state
 
@@ -80,7 +81,7 @@ class srvprime():
 
         self.soc.listen(5)
         logging.info("Socket now listening at {p}".format(p=self.port))
-            
+
         while self.running_state:
             self.conn, self.address = self.soc.accept()
             self.ip, self.port = str(self.address[0]), str(self.address[1])
@@ -125,10 +126,22 @@ class srvprime():
         self.CloseSocket()
         print("Socket server has stopped")
 
+def createServer(port):
+    print(port)
+    srv = srvprime(port)
+    srv.run()
+
 if __name__ == "__main__":
     try:
-        srv = srvprime()
-        srv.run()
+        i=0
+        servers = []
+        for a in sys.argv:
+            if i>0:
+                servers.append(threading.Thread(target=createServer, args=(int(a),)))
+            i = i + 1
+        for threads in servers:
+            threads.start()
+        #srv = srvprime(55502)
+        #srv.run()
     except KeyboardInterrupt:
         srv.StopService(True)
- 
